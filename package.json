@@ -1,12 +1,12 @@
 {
-  "name": "mmm-openweatherforecast",
+  "name": "mmm-wuweatherforecast",
   "version": "1.0.0",
-  "description": "MagicMirror² module that gets weather forecast data from OpenWeatherMap.",
+  "description": "MagicMirror² module that gets weather forecast data from Weather Underground.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tom-Hirschberger/MMM-OpenWeatherForecast.git"
+    "url": "git+https://github.com/Tom-Hirschberger/MMM-WUWeatherForecast.git"
   },
-  "main": "MMM-OpenWeatherForecast.js",
+  "main": "MMM-WUWeatherForecast.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,7 +17,7 @@
   },
   "keywords": [
     "MagicMirror",
-    "OpenWeatherMap",
+    "WeatherUnderground",
     "Weather",
     "Forecast"
   ]

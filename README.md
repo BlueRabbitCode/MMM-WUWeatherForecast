@@ -1,16 +1,16 @@
-# MMM-OpenWeatherForecast
+# MMM-WUWeatherForecast
 
-**MMM-OpenWeatherForecast** is a weather module for [MagicMirror²](https://github.com/MagicMirrorOrg/MagicMirror).
+**MMM-WUWeatherForecast** is a weather module for [MagicMirror²](https://github.com/MagicMirrorOrg/MagicMirror).
 
-It displays current, hourly and daily forecast information using data from the OpenWeather One Call API.
+It displays current, hourly and daily forecast information using data from the Weather Underground API.
 
-![Screenshot](MMM-OpenWeatherForecast.png "Screenshot of the module showing a weather forecast")
+![Screenshot](MMM-WUWeatherForecast.png "Screenshot of the module showing a weather forecast")
 
 ## Installation
 
 1. Navigate into your MagicMirror `modules` folder and execute
-  `git clone https://github.com/Tom-Hirschberger/MMM-OpenWeatherForecast`.
-2. Enter the new `MMM-OpenWeatherForecast` directory and execute `npm install`.
+  `git clone https://github.com/Tom-Hirschberger/MMM-WUWeatherForecast`.
+2. Enter the new `MMM-WUWeatherForecast` directory and execute `npm install`.
 
 ## Configuration
 
@@ -22,27 +22,10 @@ At a minimum you need to supply the following required configuration parameters:
 
 `apikey` needs to be specified as a String, while `latitude` and `longitude` can be specified as either a String or a Number. Both work fine.
 
-By default the module uses the OpenWeater One Call API in version 3.0 now cause version 2.5 has been shut down in June 2024. If you know what you are doing you can use the config option `apiBaseURL` to specify the URL you like. 
+By default the module uses the Weather Underground API. You can use the config option `apiBaseURL` to specify the URL you like.
 
-Make sure to subscribe to the new 3.0 API first and wait a couple hours till the subscription is activated. You will need to provide payment information for the new subscription but as long as you stay under the daily free limit (1000 calls at the moment) you will not be charged.
-
-e.g.,
-
-```js
-  {
-    module: "MMM-OpenWeatherForecast",
-    position: "top_right",
-    header: "Forecast",
-    config: {
-      apikey: "a1b2c3d4e5f6g7h8j9k0", //only string here
-      latitude: 51.490230,            //number works here
-      longitude: "-0.258810"          //so does a string
-    }
-  },
-```
-
-You need to create a free account with OpenWeather in order to get an API key:
-<https://home.openweathermap.org/users/sign_up>.
+You need to create a free account with Weather Underground in order to get an API key:
+<https://www.weather.com/>.
 
 Find out your latitude and longitude here:
 <https://www.latlong.net/>.
@@ -292,7 +275,7 @@ This shows just Hi/Low temp display and precipitation:
 
 ```js
   {
-    module: "MMM-OpenWeatherForecast",
+    module: "MMM-WUWeatherForecast",
     position: "top_right",
     header: "Forecast",
     config: {
@@ -372,12 +355,12 @@ This shows just Hi/Low temp display and precipitation:
 This module is set to be 320px wide by default. If you wish to override it, you can add the following to your `custom.css` file:
 
 ```css
-.MMM-OpenWeatherForecast .module-content {
+.MMM-WUWeatherForecast .module-content {
   width: 500px; /* adjust this as desired */
 }
 ```
 
-Most important elements of this module have one or more class names applied. Examine the `MMM-OpenWeatherForecast.css`, `mmm-openweather-forecast.njk`, or inspect elements directly with your browser of choice to determine what class you would like to override (Pro tip: If you start MagicMirror with `npm start dev` you'll get Chrome dev tools that will allow you to directly inspect any HTML element in the module).
+Most important elements of this module have one or more class names applied. Examine the `MMM-WUWeatherForecast.css`, `mmm-wuweather-forecast.njk`, or inspect elements directly with your browser of choice to determine what class you would like to override (Pro tip: If you start MagicMirror with `npm start dev` you'll get Chrome dev tools that will allow you to directly inspect any HTML element in the module).
 
 ## For Module Developers
 

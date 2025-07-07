@@ -1,21 +1,21 @@
 /*********************************
 
-  Node Helper for MMM-OpenWeatherForecast.
+  Node Helper for MMM-WUWeatherForecast.
 
-  This helper is responsible for the data pull from OpenWeather's
-  One Call API. At a minimum the API key, Latitude and Longitude
+  This helper is responsible for the data pull from Weather Underground's
+  API. At a minimum the API key, Latitude and Longitude
   parameters must be provided.  If any of these are missing, the
-  request to OpenWeather will not be executed, and instead an error
+  request to Weather Underground will not be executed, and instead an error
   will be output the the MagicMirror log.
 
   Additional, this module supplies two optional parameters:
 
     units - one of "standard", "metric" or "imperial"
-    lang - Any of the languages OpenWeather supports, as listed here: https://openweathermap.org/api/one-call-api#multi
+    lang - Any of the languages Weather Underground supports, as listed here: https://docs.weather.com/weather-api/
 
-  The OpenWeather OneCall API request looks like this:
+  The Weather Underground API request looks like this:
 
-    https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely&appid={API key}&units={units}&lang={lang}
+    https://api.weather.com/v3/wx/forecast/daily/5day?geocode={lat},{lon}&format=json&units={units}&language={lang}&apiKey={API key}
 
 *********************************/
 
@@ -31,25 +31,24 @@ module.exports = NodeHelper.create({
 
   async socketNotificationReceived(notification, payload){
     var self = this;
-    if (notification === "OPENWEATHER_FORECAST_GET") {
+    if (notification === "WUWEATHER_FORECAST_GET") {
       if (payload.apikey == null || payload.apikey == "") {
-        Log.log( "[MMM-OpenWeatherForecast] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** No API key configured. Get an API key at https://openweathermap.org/" );
+        Log.log( "[MMM-WUWeatherForecast] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** No API key configured. Get an API key at https://www.weather.com/" );
       } else if (payload.latitude == null || payload.latitude == "" || payload.longitude == null || payload.longitude == "") {
-        Log.log( "[MMM-OpenWeatherForecast] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** Latitude and/or longitude not provided." );
+        Log.log( "[MMM-WUWeatherForecast] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** Latitude and/or longitude not provided." );
       } else {
-
-        //make request to OpenWeather One Call API
+        // Construct Weather Underground API request
+        // Example endpoint: https://api.weather.com/v3/wx/forecast/daily/5day?geocode={lat},{lon}&format=json&units=m&language=en-US&apiKey={apiKey}
         var url = payload.apiBaseURL +
-          "lat=" + payload.latitude +
-          "&lon=" + payload.longitude +
-          "&exclude=" + "minutely" +
-          "&appid=" + payload.apikey +
+          "geocode=" + payload.latitude + "," + payload.longitude +
+          "&format=json" +
           "&units=" + payload.units +
-          "&lang=" + payload.language;
+          "&language=" + payload.language +
+          "&apiKey=" + payload.apikey;
 
         if (typeof self.config !== "undefined"){
           if (self.config.debug === true){
-            Log.log(self.name+"Fetching url: "+url)
+            Log.log(self.name+" Fetching url: "+url)
           }
         }
 
@@ -63,11 +62,11 @@ module.exports = NodeHelper.create({
           }).then(data => {
             if (typeof data !== "undefined") {
               data.instanceId = payload.instanceId;
-              self.sendSocketNotification("OPENWEATHER_FORECAST_DATA", data);
+              self.sendSocketNotification("WUWEATHER_FORECAST_DATA", data);
             }
           })
           .catch(error => {
-            Log.error("[MMM-OpenWeatherForecast] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** " + error+"\n"+error.stack)
+            Log.error("[MMM-WUWeatherForecast] " + moment().format("D-MMM-YY HH:mm") + " ** ERROR ** " + error+"\n"+error.stack)
           });
       }
     } else if (notification === "CONFIG") {
